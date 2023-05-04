@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://kit.fontawesome.com/62945c2704.js" crossorigin="anonymous"></script>
+
+    <script type="module" src="main.js"></script>
+    <script type="module" src="./youtube.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="left-heading">
+        <span class="burger-icon">
+          <i class="fa-solid fa-bars"></i>
+        </span>
+        <span class="youtube-icon"><i class="fa-brands fa-youtube" style="color: #ff1f1f"></i></span>
+
+        <h3 class="title">Youtube</h3>
+      </div>
+
+      <div class="middle-heading">
+        <input type="text" placeholder="Search" class="search-field" data-search />
+        <span class="search-icon">
+          <button id="submit" data-submit>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </span>
+        <span class="micro-icon"><i class="fa-solid fa-microphone"></i></span>
+      </div>
+
+      <div class="right-heading">
+        <span class="video-icon"><i class="fa-solid fa-video"></i></span>
+        <span class="bell-icon"><i class="fa-regular fa-bell"></i></span>
+        <span></span>
+      </div>
+    </header>
+
+    <div class="container">
+      <aside class="sidebar">
+        <div class="home-buttons">
+          <p class="active">
+            <span><i class="fa-solid fa-house"></i></span>Home
+          </p>
+          <p>Shorts</p>
+          <p>Subscriptions</p>
+        </div>
+
+        <div class="recommendations-container">
+          <h3>Recommendations</h3>
+          <ul class="recommendations" data-recommendations></ul>
+        </div>
+      </aside>
+
+      <div data-video-container class="video-card-container">
+        <!-- <div class="video-card">
+           <video src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"></video> 
+          <img
+            src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"
+            alt=""
+            class="thumbnail"
+            data-video-thumbnail
+          />
+
+          <div class="video-information">
+         <div class="channel-name">
+            <img src="thumbnail.jpg" alt="" data-channel-thumbnail />
+          
+            <div class="video-stats">
+              <h4 class="video-title">video title</h4>
+              <span data-channel-name></span>
+              <span data-views></span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <template id="video-card-template">
+      <div class="video-card">
+        <!-- <video src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"></video> -->
+        <img src="" alt="" class="thumbnail" data-video-thumbnail />
+
+        <div class="video-information">
+          <!-- <div class="channel-name"> -->
+          <img alt="" data-channel-thumbnail />
+          <!-- </div> -->
+          <div class="video-stats">
+            <h4 class="video-title" data-video-title>video title</h4>
+            <span data-channel-name></span>
+            <span data-video-views></span><span>views</span>
+          </div>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>
