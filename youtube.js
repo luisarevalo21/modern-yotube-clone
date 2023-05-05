@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = "AIzaSyCrSScIglbJ7sFvPC1Bu8OMuGBi2v8-pPM";
 const VIDEO_LINK = "https://www.googleapis.com/youtube/v3/videos?";
 const CHANNEL_END_POINT = "https://www.googleapis.com/youtube/v3/channels?";
 const SEARCH_LINK = "https://www.googleapis.com/youtube/v3/search?";
