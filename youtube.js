@@ -1,69 +1,98 @@
-// AIzaSyCrSScIglbJ7sFvPC1Bu8OMuGBi2v8 - pPM;
+// const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
-const API_KEY = "YOUR_API_KEY";
+import axios from "axios";
+
+const API_KEY = process.env.API_KEY;
 const VIDEO_LINK = "https://www.googleapis.com/youtube/v3/videos?";
+const CHANNEL_END_POINT = "https://www.googleapis.com/youtube/v3/channels?";
 const SEARCH_LINK = "https://www.googleapis.com/youtube/v3/search?";
 
-export function getYoutubeData(event) {
-  event.preventDefault();
-  if (document.querySelector("[data-search]").value !== "") {
-    const searchValue = document.querySelector("[data-search]").value;
-    console.log("searh value", searchValue);
-
-    return fetch(
-      SEARCH_LINK +
-        new URLSearchParams({
+export function loadMostPopularVideos() {
+  console.log("most popular called");
+  return (
+    axios
+      .get(VIDEO_LINK, {
+        params: {
           key: API_KEY,
-          q: searchValue,
-          maxResults: 5,
-          type: "video",
-        })
-    )
-      .then(res => res.json())
-      .then(({ items }) => {
-        console.log("items", items);
-        return items.map(vidInfo => {
-          return vidInfo.id.videoId;
+          part: "snippet",
+          chart: "mostPopular",
+          maxResults: 25,
+          regionCode: "US",
+        },
+      })
+      .then(({ data }) => {
+        data.items.forEach(item => {
+          getChannelIcon(item);
         });
+        console.log("data after for each loop", data);
+        return data;
       })
-      .then(async ids => {
-        return await fetchVideoDetail(ids);
-      })
-
-      .catch(err => console.log(err));
-  }
+      // .then(data => console.log(data))
+      .catch(err => console.error(err))
+  );
 }
 
-async function fetchVideoDetail(videos) {
-  //gets the data
-  //look up how to remove the id and key from search string
-  //parse the items data array and keep what i want
-  // video snippet, title views, etc.
-
-  const videoData = [];
-  for (const vid of videos) {
-    console.log(vid);
-    const response = await fetch(
-      VIDEO_LINK +
-        new URLSearchParams({
-          key: API_KEY,
-          part: "snippet,player,statistics",
-          id: vid,
-        })
-    );
-
-    const result = await response.json();
-
-    videoData.push({
-      id: result.items[0].id,
-      thumbnail: result.items[0].snippet.thumbnails.default.url,
-      player: result.items[0].player.embedHtml,
-      title: result.items[0].snippet.title,
-      channelTitle: result.items[0].snippet.channelTitle,
-      viewCount: result.items[0].statistics.viewCount,
+function getChannelIcon(video) {
+  return axios
+    .get(CHANNEL_END_POINT, {
+      params: {
+        key: API_KEY,
+        part: "snippet",
+        id: video.snippet.channelId,
+      },
+    })
+    .then(({ data }) => data.items)
+    .then(item => {
+      //   console.log("item", item);
+      video.channelThumbnail = item[0].snippet.thumbnails.default.url;
+      makeVideoCard(video);
     });
-  }
+}
 
-  console.log("video data", videoData);
-  return videoData;
+function setValue(selector, value, { parent = document } = {}) {
+  // console.log(value);
+  parent.querySelector(`[data-${selector}]`).textContent = value;
+}
+
+const videoCardTemplate = document.getElementById("video-card-template");
+const cardContainer = document.querySelector("[data-video-container]");
+
+// function renderData(videoInformation) {
+//   console.log(videoInformation);
+//   videoInformation.items.forEach(video => {
+//     console.log("video", video.channelThumbnail);
+//     // const { channelThumbnail } = video;
+//     const { title, channelTitle, viewCount, thumbnails, id } = video.snippet;
+
+//     const element = videoCardTemplate.content.cloneNode(true);
+
+//     setValue("title", title, { parent: element });
+//     setValue("channel-name", channelTitle, { parent: element });
+//     element.querySelector("[data-video-thumbnail]").src = thumbnails.high.url;
+//     element.querySelector("[data-channel-thumbnail]").src = video.channelThumbnail;
+
+//     console.log("id", id);
+//     element.addEventListener("click", () => {
+//       location.href = `https://youtube.com/watch?v=${id}`;
+//     });
+//     cardContainer.append(element);
+//   });
+// }
+
+function makeVideoCard(video) {
+  //   console.log(video.id);
+  const { title, channelTitle, viewCount, thumbnails } = video.snippet;
+
+  const element = videoCardTemplate.content.cloneNode(true);
+
+  setValue("title", title, { parent: element });
+  setValue("channel-name", channelTitle, { parent: element });
+  element.querySelector("[data-video-thumbnail]").src = thumbnails.high.url;
+  element.querySelector("[data-channel-thumbnail]").src = video.channelThumbnail;
+
+  element.querySelector(".video").addEventListener("click", () => {
+    location.href = `https://youtube.com/watch?v=${video.id}`;
+  });
+
+  cardContainer.append(element);
 }

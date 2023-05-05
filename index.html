@@ -9,51 +9,75 @@
   </head>
 
   <body>
-    <header>
-      <div class="left-heading">
-        <span class="burger-icon">
-          <i class="fa-solid fa-bars"></i>
-        </span>
-        <span class="youtube-icon"><i class="fa-brands fa-youtube" style="color: #ff1f1f"></i></span>
-
-        <h3 class="title">Youtube</h3>
-      </div>
-
-      <div class="middle-heading">
-        <input type="text" placeholder="Search" class="search-field" data-search />
-        <span class="search-icon">
-          <button id="submit" data-submit>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </span>
-        <span class="micro-icon"><i class="fa-solid fa-microphone"></i></span>
-      </div>
-
-      <div class="right-heading">
-        <span class="video-icon"><i class="fa-solid fa-video"></i></span>
-        <span class="bell-icon"><i class="fa-regular fa-bell"></i></span>
+    <nav class="navbar">
+      <div class="toggle-btn">
+        <span></span>
+        <span></span>
         <span></span>
       </div>
-    </header>
-
-    <div class="container">
-      <aside class="sidebar">
-        <div class="home-buttons">
-          <p class="active">
-            <span><i class="fa-solid fa-house"></i></span>Home
-          </p>
-          <p>Shorts</p>
-          <p>Subscriptions</p>
+      <img src="assets/img/pngwing.com.png" class="logo" alt="" />
+      <div class="search-box">
+        <input type="text" class="search-bar" placeholder="search" data-search-bar />
+        <button class="search-btn" data-search-btn>
+          <img src="assets/img/search.PNG" alt="" />
+        </button>
+      </div>
+      <div class="user-options">
+        <img src="assets/img/video.PNG" class="icon" alt="" />
+        <img src="assets/img/grid.PNG" class="icon" alt="" />
+        <img src="assets/img/bell.PNG" class="icon" alt="" />
+        <div class="user-dp">
+          <img src="assets/img/profile-pic.png" alt="" />
         </div>
+      </div>
+    </nav>
 
-        <div class="recommendations-container">
-          <h3>Recommendations</h3>
-          <ul class="recommendations" data-recommendations></ul>
+    <!-- sidebar -->
+    <div class="sidebar">
+      <a href="#" class="links active"><img src="assets/img/home.PNG" alt="" />Home</a>
+      <a href="#" class="links"><img src="assets/img/explore.PNG" alt="" />Explore</a>
+      <a href="#" class="links"><img src="assets/img/subscription.PNG" alt="" />Subscription</a>
+      <hr class="seperator" />
+
+      <a href="#" class="links"><img src="assets/img/library.PNG" alt="" />Library</a>
+      <a href="#" class="links"><img src="assets/img/history.PNG" alt="" />History</a>
+      <a href="#" class="links"><img src="assets/img/your-video.PNG" alt="" />Your Videos</a>
+      <a href="#" class="links"><img src="assets/img/watch-later.PNG" alt="" />Water Later</a>
+      <a href="#" class="links"><img src="assets/img/liked video.PNG" alt="" />Liked Videos</a>
+      <a href="#" class="links"><img src="assets/img/show more.PNG" alt="" />Show More</a>
+    </div>
+
+    <!-- filters -->
+    <div class="filters">
+      <button class="filter-option active">all</button>
+      <button class="filter-option">css</button>
+      <button class="filter-option">web development</button>
+      <button class="filter-option">python</button>
+      <button class="filter-option">entertainment</button>
+      <button class="filter-option">marvel</button>
+      <button class="filter-option">javascript</button>
+      <button class="filter-option">AI</button>
+      <button class="filter-option">Machine learning</button>
+      <button class="filter-option">trending</button>
+    </div>
+
+    <!-- video container -->
+    <div class="video-container" data-video-container>
+      <!-- <div class="video">
+        <img src="assets/img/profile-pic.png" class="thumbnail" alt="" />
+        <div class="content">
+          <img src="assets/img/profile-pic.png " class="channel-icon" alt="" />
+
+          <div class="info">
+            <h4 class="title">working youbtube clone in 2023</h4>
+            <p class="channel-name">modern web dev</p>
+          </div>
         </div>
-      </aside>
+      </div> -->
+    </div>
 
-      <div data-video-container class="video-card-container">
-        <!-- <div class="video-card">
+    <!-- <div data-video-container class="video-card-container">
+        <div class="video-card">
            <video src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"></video> 
           <img
             src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"
@@ -73,22 +97,17 @@
             </div>
           </div>
         </div> -->
-      </div>
-    </div>
+    <!-- </div> -->
 
     <template id="video-card-template">
-      <div class="video-card">
-        <!-- <video src="https://i.ytimg.com/vi/kn6-c223DUU/default.jpg"></video> -->
-        <img src="" alt="" class="thumbnail" data-video-thumbnail />
+      <div class="video">
+        <img class="thumbnail" alt="" data-video-thumbnail />
+        <div class="content">
+          <img class="channel-icon" alt="" data-channel-thumbnail />
 
-        <div class="video-information">
-          <!-- <div class="channel-name"> -->
-          <img alt="" data-channel-thumbnail />
-          <!-- </div> -->
-          <div class="video-stats">
-            <h4 class="video-title" data-video-title>video title</h4>
-            <span data-channel-name></span>
-            <span data-video-views></span><span>views</span>
+          <div class="info">
+            <h4 class="title" data-title></h4>
+            <p class="channel-name" data-channel-name>${video.snippet.channelTitle}</p>
           </div>
         </div>
       </div>
